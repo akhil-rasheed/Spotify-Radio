@@ -6,6 +6,7 @@ export default function CreateNewShow({
   setDisplayModal,
   accessToken,
   setSelectedPlaylist,
+  setNewChange,
 }) {
   const spotifyApi = new SpotifyWebApi({
     clientId: "fbe2d6743a13434283678fa7d7e7f934",
@@ -22,6 +23,7 @@ export default function CreateNewShow({
         console.log(response);
         setSelectedPlaylist(response.body.id);
         setDisplayModal(false);
+        setNewChange(true);
       })
       .catch((err) => {});
   };

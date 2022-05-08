@@ -2,16 +2,29 @@ import { useState, useEffect } from "react";
 import PlaylistView from "./PlaylistView";
 import SinglePlaylistView from "./SinglePlaylistView";
 import CreateNewShow from "./CreateNewShow";
+import SpotifyWebApi from "spotify-web-api-node";
 
-export default function Content({ playlists, accessToken, setPlayingTrack }) {
+export default function Content({ accessToken, setPlayingTrack }) {
   const [selectedPlaylist, setSelectedPlaylist] = useState();
   const [displayModal, setDisplayModal] = useState(false);
+  const [userPlaylists, setUserPlaylists] = useState();
   const [newChange, setNewChange] = useState(false);
 
+  const spotifyApi = new SpotifyWebApi({
+    clientId: "fbe2d6743a13434283678fa7d7e7f934",
+  });
+
   useEffect(() => {
-    console.log("MAIN UPDAYE");
-    setNewChange(false);
-  }, [newChange]);
+    if (!accessToken) return;
+    spotifyApi.setAccessToken(accessToken);
+    spotifyApi.getUserPlaylists().then((res) => {
+      const filtered = res.body.items.filter((playlist) =>
+        playlist.name.startsWith("//frootFM")
+      );
+      setUserPlaylists(filtered);
+      setNewChange(false);
+    });
+  }, [accessToken, newChange]);
 
   if (displayModal) {
     return (
@@ -19,10 +32,11 @@ export default function Content({ playlists, accessToken, setPlayingTrack }) {
         setDisplayModal={setDisplayModal}
         accessToken={accessToken}
         setSelectedPlaylist={setSelectedPlaylist}
+        setNewChange={setNewChange}
       />
     );
   }
-  if (!selectedPlaylist) {
+  if (!selectedPlaylist && userPlaylists) {
     return (
       <div className="h-screen w-screen bg-black p-12 text-white">
         <p className="text-3xl font-sans font-bold">Your shows</p>
@@ -35,7 +49,7 @@ export default function Content({ playlists, accessToken, setPlayingTrack }) {
           >
             <p className="text-2xl font-sans font-bold">Create a new show...</p>
           </div>
-          {playlists.map((playlist) => {
+          {userPlaylists.map((playlist) => {
             return (
               <PlaylistView
                 playlist={playlist}

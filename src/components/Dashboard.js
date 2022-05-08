@@ -9,7 +9,6 @@ import NavBar from "./NavBar";
 
 export default function Dashboard({ code }) {
   const [currentUser, setCurrentUser] = useState();
-  const [userPlaylists, setUserPlaylists] = useState();
   const [playingTrack, setPlayingTrack] = useState();
 
   const accessToken = useAuth(code);
@@ -23,23 +22,13 @@ export default function Dashboard({ code }) {
     spotifyApi.getMe().then((res) => {
       setCurrentUser(res.body);
     });
-    spotifyApi.getUserPlaylists().then((res) => {
-      const filtered = res.body.items.filter((playlist) =>
-        playlist.name.startsWith("//frootFM")
-      );
-      setUserPlaylists(filtered);
-    });
   }, [accessToken]);
 
-  return currentUser && userPlaylists ? (
+  return currentUser ? (
     <div className="h-screen bg-black">
       <Profile user={currentUser} />
       <NavBar />
-      <Content
-        playlists={userPlaylists}
-        accessToken={accessToken}
-        setPlayingTrack={setPlayingTrack}
-      />
+      <Content accessToken={accessToken} setPlayingTrack={setPlayingTrack} />
       <Player accessToken={accessToken} trackUri={playingTrack?.uri} />
     </div>
   ) : (
