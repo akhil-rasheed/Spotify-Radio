@@ -1,5 +1,5 @@
 import React from "react";
-
+import addImage from "./assets/add-image.png";
 export default function PlaylistView({ playlist, setSelectedPlaylist }) {
   const setSingleView = () => {
     setSelectedPlaylist(playlist.id);
@@ -8,10 +8,14 @@ export default function PlaylistView({ playlist, setSelectedPlaylist }) {
   const playlistName = playlist.name.includes("//frootFM")
     ? playlist.name.slice(9)
     : playlist.name;
-  const smallest_img = playlist.images.reduce((smallest, image) => {
-    if (image.height < smallest.height) return image;
-    return smallest;
-  }, playlist.images[0]);
+
+  let smallest_img;
+  if (playlist.images[0]) {
+    smallest_img = playlist.images.reduce((smallest, image) => {
+      if (image.height < smallest.height) return image;
+      return smallest;
+    }, playlist.images[0]);
+  }
 
   return (
     <div
@@ -20,8 +24,8 @@ export default function PlaylistView({ playlist, setSelectedPlaylist }) {
     >
       <div>
         <img
-          src={smallest_img.url}
-          alt=""
+          src={playlist.images[0] ? smallest_img.url : addImage}
+          alt={addImage}
           className="w-24 h-24 rounded-xl m-3"
         ></img>
       </div>

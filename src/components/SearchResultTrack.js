@@ -28,7 +28,7 @@ export default function SearchResultTrack({ track, setNewTrack }) {
             alt=""
             className="h-8 w-8 my-2 float-right hover:bg-pink-800 rounded-xl p-1"
             onClick={() => {
-              setNewTrack(track.uri);
+              setNewTrack([track.uri]);
             }}
           ></img>
         </div>

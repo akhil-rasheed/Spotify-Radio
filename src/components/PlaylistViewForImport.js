@@ -1,5 +1,6 @@
 import React from "react";
 import addButton from "./assets/add-button.png";
+import addImage from "./assets/add-image.png";
 
 export default function PlaylistViewForImport({
   playlist,
@@ -11,16 +12,19 @@ export default function PlaylistViewForImport({
     : playlist.name;
 
   //find smallest image
-  const smallest_img = playlist.images.reduce((smallest, image) => {
-    if (image.height < smallest.height) return image;
-    return smallest;
-  }, playlist.images[0]);
+  let smallest_img;
+  if (playlist.images[0]) {
+    smallest_img = playlist.images.reduce((smallest, image) => {
+      if (image.height < smallest.height) return image;
+      return smallest;
+    }, playlist.images[0]);
+  }
 
   return (
     <div className="h-32 my-8 mx-2 flex rounded-sm bg-gray-800 shadow-2xl hover:bg-gray-800/75">
       <div>
         <img
-          src={smallest_img.url}
+          src={playlist.images[0] ? smallest_img.url : addImage}
           alt=""
           className="w-24 h-24 rounded-xl m-3"
         ></img>

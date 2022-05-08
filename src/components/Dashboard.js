@@ -4,10 +4,13 @@ import SpotifyWebApi from "spotify-web-api-node";
 import Profile from "./Profile";
 import Content from "./Content";
 import logo from "./assets/logo.png";
+import Player from "./Player";
+import NavBar from "./NavBar";
 
 export default function Dashboard({ code }) {
   const [currentUser, setCurrentUser] = useState();
   const [userPlaylists, setUserPlaylists] = useState();
+  const [playingTrack, setPlayingTrack] = useState();
 
   const accessToken = useAuth(code);
   const spotifyApi = new SpotifyWebApi({
@@ -31,7 +34,13 @@ export default function Dashboard({ code }) {
   return currentUser && userPlaylists ? (
     <div className="h-screen bg-black">
       <Profile user={currentUser} />
-      <Content playlists={userPlaylists} accessToken={accessToken} />
+      <NavBar />
+      <Content
+        playlists={userPlaylists}
+        accessToken={accessToken}
+        setPlayingTrack={setPlayingTrack}
+      />
+      <Player accessToken={accessToken} trackUri={playingTrack?.uri} />
     </div>
   ) : (
     <div>

@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function PlaylistTrack({ track }) {
+export default function PlaylistTrack({ track, setPlayingTrack }) {
   if (track) {
     const thumb = track.album.images.slice(-1);
     const min = Math.floor(track.duration_ms / 60000);
@@ -9,7 +9,13 @@ export default function PlaylistTrack({ track }) {
     ).slice(-2);
 
     return (
-      <div className="h-auto bg-gray-900 hover:bg-gray-800 hover:cursor-pointer my-1">
+      <div
+        className="h-auto bg-gray-900 hover:bg-gray-800 hover:cursor-pointer my-1"
+        onClick={() => {
+          console.log(track);
+          setPlayingTrack(track);
+        }}
+      >
         <div className="flex px-3 py-2">
           <img src={thumb[0].url} alt="" className="h-12 w-12 "></img>
           <div>

@@ -3,18 +3,22 @@ import SpotifyWebApi from "spotify-web-api-node";
 import PlaylistTrack from "./PlaylistTrack";
 import TrackSearch from "./TrackSearch";
 import ImportFromPlaylist from "./ImportFromPlaylist";
+import Player from "./Player";
+import addImage from "./assets/add-image.png";
 
 export default function SinglePlaylistView({
   id,
   accessToken,
   setSelectedPlaylist,
+  setPlayingTrack,
+  setNewChange,
 }) {
   const spotifyApi = new SpotifyWebApi({
     clientId: "fbe2d6743a13434283678fa7d7e7f934",
   });
 
   const [playlist, setPlaylist] = useState();
-  const [newTrack, setNewTrack] = useState("");
+  const [newTrack, setNewTrack] = useState();
   const [newImportPlaylist, setNewImportPlaylist] = useState("");
 
   //instantiates api and fetches playlist
@@ -22,24 +26,30 @@ export default function SinglePlaylistView({
     if (!accessToken) return;
     spotifyApi.setAccessToken(accessToken);
     spotifyApi.getPlaylist(id).then((data) => {
-      console.log("this gets called again");
+      console.log("Fetching playlist");
       setPlaylist(data.body);
     });
   }, [id, newTrack, newImportPlaylist]);
 
+  // Adding track from search
   useEffect(() => {
+    console.log("Adding track");
     if (!newTrack) return;
     if (!accessToken) return;
-    spotifyApi.addTracksToPlaylist(playlist.id, [...newTrack]).then((res) => {
-      console.log("track successfully added");
-      setNewTrack("");
-    });
+    spotifyApi.addTracksToPlaylist(playlist.id, [...newTrack]).then(
+      (res) => {
+        console.log("tracks successfully added");
+        setNewTrack();
+        setNewChange(true);
+      },
+      [newTrack]
+    );
   }, [newTrack]);
 
+  //importing tracks from playlist
   useEffect(() => {
     if (!newImportPlaylist) return;
     if (!accessToken) return;
-
     spotifyApi.getPlaylist(newImportPlaylist).then((res) => {
       const tracksToBeAdded = res.body.tracks.items.map(
         (track) => track.track.uri
@@ -69,7 +79,7 @@ export default function SinglePlaylistView({
           <div className="flex flex-wrap mb-10 w-full ">
             {/* Playlist image */}
             <img
-              src={playlist.images[0].url}
+              src={playlist.images[0] ? playlist.images[0].url : addImage}
               alt={playlist.name}
               className="h-60 w-60 bg-gray-800 rounded-xl p-2 shadow-white"
             ></img>
@@ -90,6 +100,7 @@ export default function SinglePlaylistView({
                 track={track.track}
                 key={track.track.id}
                 theme="playlist"
+                setPlayingTrack={setPlayingTrack}
               />
             ))}
           </div>
@@ -106,5 +117,7 @@ export default function SinglePlaylistView({
         </div>
       </div>
     );
+  } else {
+    return null;
   }
 }
