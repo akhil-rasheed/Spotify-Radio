@@ -19,7 +19,7 @@ export default function PlaylistView({ playlist, setSelectedPlaylist }) {
 
   return (
     <div
-      className="w-80 h-32 my-8 mx-2 flex rounded-xl bg-gray-800 hover:bg-gray-900 hover:cursor-pointer"
+      className="w-80 h-32 my-8 mx-2 flex rounded-xl bg-gradient-to-tl from-gray-900 to-purple-900 hover:bg-gray-900 hover:cursor-pointer"
       onClick={setSingleView}
     >
       <div>

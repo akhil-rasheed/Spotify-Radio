@@ -3,13 +3,13 @@ import useAuth from "./useAuth";
 import SpotifyWebApi from "spotify-web-api-node";
 import Profile from "./Profile";
 import Content from "./Content";
-import logo from "./assets/logo.png";
 import Player from "./Player";
 import NavBar from "./NavBar";
 
 export default function Dashboard({ code }) {
   const [currentUser, setCurrentUser] = useState();
   const [playingTrack, setPlayingTrack] = useState();
+  const [value, setValue] = useState(0);
 
   const accessToken = useAuth(code);
   const spotifyApi = new SpotifyWebApi({
@@ -25,17 +25,17 @@ export default function Dashboard({ code }) {
   }, [accessToken]);
 
   return currentUser ? (
-    <div className="h-screen bg-black">
+    <div className="h-fit bg-black">
       <Profile user={currentUser} />
-      <NavBar />
+      <NavBar value={value} setValue={setValue} />
       <Content accessToken={accessToken} setPlayingTrack={setPlayingTrack} />
       <Player accessToken={accessToken} trackUri={playingTrack?.uri} />
     </div>
   ) : (
-    <div>
-      <div className="h-screen bg-black text-center p-24 text-white text-bold text-3xl grid place-items-center">
-        <img src={logo} alt="loading"></img>
-        loading...
+    <div className="bg-black h-screen">
+      <Profile />
+      <div className="grid place-items-center">
+        <p className="text-3xl text-white m-4">Loading...</p>
       </div>
     </div>
   );

@@ -1,20 +1,44 @@
-import React from "react";
-import { Nav } from "rsuite";
+import { useState } from "react";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import { styled } from "@mui/material/styles";
+import PhoneIcon from "@mui/icons-material/Radio";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import PersonPinIcon from "@mui/icons-material/LibraryMusic";
 
-import "rsuite/styles/index.less"; // or 'rsuite/dist/rsuite.min.css'
+export default function NavBar({ value, setValue }) {
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
-const NavBar = () => {
+  const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
+    ({ theme }) => ({
+      textTransform: "none",
+      fontWeight: theme.typography.fontWeightRegular,
+      fontSize: theme.typography.pxToRem(15),
+      marginRight: theme.spacing(1),
+      color: "rgba(255, 255, 255, 0.7)",
+      "&.Mui-selected": {
+        color: "#fff",
+      },
+      "&.Mui-focusVisible": {
+        backgroundColor: "#fff",
+      },
+    })
+  );
+
   return (
-    <div className="grid place-items-center text-white bg-gray-900 h-20">
-      <Nav appearance="tabs">
-        <Nav.Item eventKey="home">Home</Nav.Item>
-        <Nav.Item eventKey="news">News</Nav.Item>
-        <Nav.Item eventKey="solutions">Solutions</Nav.Item>
-        <Nav.Item eventKey="products">Products</Nav.Item>
-        <Nav.Item eventKey="about">About</Nav.Item>
-      </Nav>
+    <div className="grid place-items-center bg-black w-screen">
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        aria-label="icon label tabs example"
+        className="bg-gradient-to-tr from-pink-900 to-purple-500 p-4 rounded-lg"
+      >
+        <StyledTab icon={<PhoneIcon />} label="RADIO" />
+        <StyledTab icon={<FavoriteIcon />} label="FAVORITES" />
+        <StyledTab icon={<PersonPinIcon />} label="YOUR STATIONS" />
+      </Tabs>
     </div>
   );
-};
-
-export default NavBar;
+}

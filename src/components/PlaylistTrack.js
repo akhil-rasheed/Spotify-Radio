@@ -10,7 +10,7 @@ export default function PlaylistTrack({ track, setPlayingTrack }) {
 
     return (
       <div
-        className="h-auto bg-gray-900 hover:bg-gray-800 hover:cursor-pointer my-1"
+        className="h-auto bg-gray-900 hover:bg-gray-800 hover:cursor-pointer my-1 bg-gradient-to-r from-cyan-800 to-gray-500"
         onClick={() => {
           console.log(track);
           setPlayingTrack(track);

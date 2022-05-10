@@ -4,11 +4,11 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     fontFamily: {
-      sans: ["Montserrat", "system-ui"],
+      sans: ["Roboto", "system-ui"],
     },
     extend: {
       colors: {
-        gray: colors.slate,
+        gray: colors.blue,
       },
     },
   },

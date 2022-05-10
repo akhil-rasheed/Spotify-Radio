@@ -7,12 +7,16 @@ const AUTH_URL =
 
 export default function Login() {
   return (
-    <div className="bg-black h-screen grid place-items-center ">
+    <div className="bg-black h-screen">
       <Profile />
-      <button className="bg-green-500 hover:bg-black hover:text-white text-white font-bold py-2 px-4 rounded-full fixed top-2/3">
-        <a href={AUTH_URL}>Login with Spotify</a>
-      </button>
-      <p className="text-3xl text-white">Get started...</p>
+      <div className="grid place-items-center">
+        <p className="text-3xl text-white m-4">
+          To get started, <br></br> Connect your Spotify account
+        </p>
+        <button className="bg-green-500 hover:bg-black hover:text-white text-white font-bold py-2 px-4 rounded-full ">
+          <a href={AUTH_URL}>Login with Spotify</a>
+        </button>
+      </div>
     </div>
   );
 }

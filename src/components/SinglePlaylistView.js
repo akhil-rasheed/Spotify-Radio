@@ -33,9 +33,9 @@ export default function SinglePlaylistView({
 
   // Adding track from search
   useEffect(() => {
-    console.log("Adding track");
     if (!newTrack) return;
     if (!accessToken) return;
+    console.log("Adding track");
     spotifyApi.addTracksToPlaylist(playlist.id, [...newTrack]).then(
       (res) => {
         console.log("tracks successfully added");
