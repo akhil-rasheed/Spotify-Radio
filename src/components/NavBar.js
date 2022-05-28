@@ -28,7 +28,7 @@ export default function NavBar({ value, setValue }) {
   );
 
   return (
-    <div className="grid place-items-center bg-black w-screen">
+    <div className="grid place-items-center bg-gradient-to-r from-black to-slate-900 w-screen">
       <Tabs
         value={value}
         onChange={handleChange}

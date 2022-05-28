@@ -38,7 +38,7 @@ export default function Content({ accessToken, setPlayingTrack }) {
   }
   if (!selectedPlaylist && userPlaylists) {
     return (
-      <div className="h-full w-screen bg-black p-12 text-white">
+      <div className="h-full w-screen  p-12 text-white">
         <p className="text-3xl font-sans font-bold">Your shows</p>
         <div className="flex flex-wrap">
           <div

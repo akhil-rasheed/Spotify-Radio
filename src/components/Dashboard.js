@@ -25,7 +25,7 @@ export default function Dashboard({ code }) {
   }, [accessToken]);
 
   return currentUser ? (
-    <div className="h-fit bg-black">
+    <div className="h-fit bg-gradient-to-tr from-black to-slate-900">
       <Profile user={currentUser} />
       <NavBar value={value} setValue={setValue} />
       <Content accessToken={accessToken} setPlayingTrack={setPlayingTrack} />

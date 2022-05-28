@@ -5,7 +5,7 @@ export default function Profile({ user }) {
   const userImage = user?.images[0].url;
 
   return user ? (
-    <div className="w-screen bg-black px-12 py-1 flow-root">
+    <div className="w-screen bg-gradient-to-r from-black to-slate-900 px-12 py-1 flow-root">
       <div className="w-10/12">
         <img src={logo} alt="grapefroot" className="w-60 m-2 float-left"></img>
       </div>
